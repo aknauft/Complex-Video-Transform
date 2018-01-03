@@ -1,17 +1,5 @@
-const w = 320;  const h = 240;
-const realRange = [-2, 2];  const imagRange = [-2, 2];
 const scale = function (value, start1, stop1, start2, stop2) {
   return start2 + (value - start1) * ((stop2 - start2) / (stop1 - start1));
-}
-
-function FancyComplexMath(complex) {
-  let a = complex.real;
-  let b = complex.imaginary;
-
-  return {
-    real: a*a-b*b, // a*a-b*b,
-    imaginary: 2*a*b // 2*a*b;
-  }
 }
 
 function coordToPixelIndex (coord) {
@@ -26,7 +14,7 @@ function coordToComplexNumber(coord){
 }
 function complexNumberToCoord(complex){
   return {
-    x: Math.min(w, Math.max(0, Math.round(scale(complex.real,realRange[0], realRange[1], 0, w)))),
+    x: Math.min(w, Math.max(0, Math.floor(scale(complex.real,realRange[0], realRange[1], 0, w)))),
     y: Math.min(h, Math.max(0, Math.floor(scale(complex.imaginary,imagRange[1], imagRange[0], 0, h))))
   }
 }
@@ -36,7 +24,7 @@ function drawOutputImage(targetContext, backgroundContext){
   let bgPixels = bgImageData.data;
   
   let targetImageData = backgroundContext.getImageData(0,0, w,h);
-  let targetPixels = targetImageData.data.fill(255);
+  let targetPixels = targetImageData.data.fill(0);
 
   for (let x_ = 0; x_ < bgImageData.width; x_++) {
     for (let y_ = 0; y_ < bgImageData.height; y_++) {
@@ -51,7 +39,7 @@ function drawOutputImage(targetContext, backgroundContext){
       targetPixels[i_ + 0] = r;
       targetPixels[i_ + 1] = g;
       targetPixels[i_ + 2] = b;
-      targetPixels[i_ + 3] &= a;
+      targetPixels[i_ + 3] += a;
     }
   }
   
