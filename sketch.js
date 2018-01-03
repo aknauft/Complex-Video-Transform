@@ -14,8 +14,8 @@ function coordToComplexNumber(coord){
 }
 function complexNumberToCoord(complex){
   return {
-    x: Math.min(w, Math.max(0, Math.floor(scale(complex.real,realRange[0], realRange[1], 0, w)))),
-    y: Math.min(h, Math.max(0, Math.floor(scale(complex.imaginary,imagRange[1], imagRange[0], 0, h))))
+    x: Math.floor(scale(complex.real,realRange[0], realRange[1], 0, w)), // consider clamping to [0, w]
+    y: Math.floor(scale(complex.imaginary,imagRange[1], imagRange[0], 0, h))
   }
 }
 
@@ -25,6 +25,7 @@ function drawOutputImage(targetContext, backgroundContext){
   
   let targetImageData = backgroundContext.getImageData(0,0, w,h);
   let targetPixels = targetImageData.data.fill(0);
+//   targetImageData.data.forEach((e,i) => {targetImageData[i] = i%4==3? 255: 0});
 
   for (let x_ = 0; x_ < bgImageData.width; x_++) {
     for (let y_ = 0; y_ < bgImageData.height; y_++) {
@@ -34,12 +35,14 @@ function drawOutputImage(targetContext, backgroundContext){
       const b = bgPixels[i + 2];
       const a = bgPixels[i + 3];
       
-      
       const i_ = coordToPixelIndex(complexNumberToCoord(FancyComplexMath(coordToComplexNumber({x:x_, y:y_}))));
-      targetPixels[i_ + 0] = r;
-      targetPixels[i_ + 1] = g;
-      targetPixels[i_ + 2] = b;
-      targetPixels[i_ + 3] += a;
+      if(i_ < 0 || i_ > targetPixels.length) // No need to plot what we can't see. Just move on.
+        continue;
+      // If there is already a point mapped to i_, we should try to show both.
+      targetPixels[i_ + 0] = targetPixels[i_ + 0] == 0? r : 0.5*(targetPixels[i_ + 0] + r);
+      targetPixels[i_ + 1] = targetPixels[i_ + 1] == 0? g : 0.5*(targetPixels[i_ + 1] + g);
+      targetPixels[i_ + 2] = targetPixels[i_ + 2] == 0? b : 0.5*(targetPixels[i_ + 2] + b);
+      targetPixels[i_ + 3] = 255;
     }
   }
   

@@ -8,3 +8,4 @@ Turns out, still images are probably a better way to do things. There are some f
 
 But hey, it was fun, and still looks awesome!
 
+`student.js` holds all the changeable pieces: set the width and height of the videos, adjust the corresponding domain/range for input/output planes; and most importantly, define a complex function to use.
