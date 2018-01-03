@@ -1,0 +1,17 @@
+body{
+  height:100%;
+}
+.container {
+  display: grid;
+  grid-template-columns: 640px 640px;
+  grid-gap: 40px;
+  background-color: #212424;
+  height: 100%;
+  width:100%;
+}
+
+.container > * {
+  background: #2081C3;
+  padding: 12px;
+  margin: 10px;
+}
