@@ -1,5 +1,5 @@
 const w = 640;  const h = 480;
-const realRange = [-2, 2];  const imagRange = [-2, 2];
+const realRange = [-1, 1];  const imagRange = [-1, 1];
 
 function FancyComplexMath(complex) {
   let a = complex.real;
