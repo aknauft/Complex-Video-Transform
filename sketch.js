@@ -4,7 +4,7 @@ const scale = function (value, start1, stop1, start2, stop2) {
 
 function coordToPixelIndex (coord) {
   // Yikes! What if coord.x > w? That won't have a pixel index...
-  if(!(coord.x < w && coord.y < h)){
+  if(!(0 < coord.x && coord.x < w && 0 < coord.y && coord.y < h)){
     return -1; // Really I want to throw a BadCoordinate error
   }
   return (coord.x + coord.y * w) * 4;
