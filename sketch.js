@@ -77,12 +77,10 @@ navigator.mediaDevices.getUserMedia({
   window.setInterval(function() {
       backgroundContext.drawImage(rawVideo, 0, 0, w, h);
       ctxIn.drawImage(rawVideo, 0,0, w,h);
-//      ctxIn.font = '12px serif';ctxIn.fillStyle = "#fff";
-//      ctxIn.fillText(imagRange[0], 0, h);
-//      ctxIn.fillText(imagRange[1], 0, 12);
-//      ctxIn.fillText(realRange[0], 12, h+12);
-//      ctxIn.fillText(realRange[1], w, h+12);
-
+    // Mark origin?
+    //let C = complexNumberToCoord({real: 0, imaginary:0});
+    //    ctxIn.arc(C.x, C.y, 12, 0, 2*Math.PI);
+    //    ctxIn.fillStyle = '#00ff22'; ctxIn.fill();
       drawOutputImage(ctxOut, backgroundContext);
       });
   })
